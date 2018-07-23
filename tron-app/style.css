@@ -1,0 +1,14 @@
+.moto {
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+    position: absolute;
+}
+
+#moto1 {
+    background-color: red;
+}
+
+#moto2 {
+    background-color: blue;
+}

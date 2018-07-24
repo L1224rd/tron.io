@@ -5,10 +5,25 @@
     position: absolute;
 }
 
-#moto1 {
+#moto0 {
     background-color: red;
+}
+
+#moto1 {
+    background-color: black;
 }
 
 #moto2 {
     background-color: blue;
 }
+#moto3 {
+    background-color: yellow;
+}
+
+#moto4 {
+    background-color: #00ff00;
+}
+#moto5 {
+    background-color: #641d61;
+}
+

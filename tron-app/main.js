@@ -1,53 +1,15 @@
-const moto1 = document.getElementById('moto1').style;
-const moto2 = document.getElementById('moto2').style;
-const body = document.getElementById('body');
 const html = document.getElementById('html');
-let flag = 0;
-let myCoord;
-let otherCoord;
+const motos = [];
+let number;
 
-getCoord(() => {
-    getOtherCoord(() => {
-        continuar();
-    });
+httpGet('/moto/number', (res) => {
+    number = res;
 });
 
-function continuar() {
-    moto1.left = myCoord.x + 'px';
-    moto1.top = myCoord.y + 'px';
-    getArrow();
-}
+update();
 
-function moveBall(direction) {
-    if (flag) return;
-    switch (direction) {
-        case 37: //left
-            moto1.left = myCoord.x + 'px';
-            --myCoord.x;
-            break;
-        case 38: //up
-            moto1.top = myCoord.y + 'px';
-            --myCoord.y;
-            break;
-        case 39: //right
-            moto1.left = myCoord.x + 'px';
-            ++myCoord.x;
-            break;
-        case 40: //down
-            moto1.top = myCoord.y + 'px';
-            ++myCoord.y;
-            break;
-    }
-    setCoord(() => {
-        getCoord(() => {
-            moveBall(direction);
-            getOtherCoord(() => {
-                moto2.left = otherCoord.x + 'px';
-                moto2.top = otherCoord.y + 'px';
-            });
-        });
-    });
-
+for (i = 0; i < 6; i++) {
+    motos.push(document.getElementById('moto' + i).style);
 }
 
 function getArrow() {
@@ -56,16 +18,16 @@ function getArrow() {
             flag = 1;
             setTimeout(() => {
                 flag = 0;
-                moveBall(e.keyCode);
+                move(e.keyCode);
             }, 50);
         }
     });
 }
 
-function httpGet(success, url) {
+function httpGet(url, success) {
     var http = new XMLHttpRequest();
 
-    http.open('GET', url || 'http://localhost:3000/1', true);
+    http.open('GET', 'http://localhost:3000' + url, true);
 
     http.onreadystatechange = () => {
         if (http.status === 0) {
@@ -78,29 +40,34 @@ function httpGet(success, url) {
     http.send();
 }
 
-function setCoord(success) {
-    httpGet(success, `http://localhost:3000/set1?x=${myCoord.x}&y=${myCoord.y}`);
-}
-
-function getCoord(success) {
-    httpGet((response) => {
-        let res = JSON.parse(response);
-        myCoord = {
-            x: res.x,
-            y: res.y
-        }
-        success();
+function move(direction) {
+    httpGet('/moto/coords/' + number + '/' + direction, (res) => {
+        update(JSON.parse(res));
     });
 }
 
-function getOtherCoord(success) {
-    httpGet((response) => {
-        let res = JSON.parse(response);
-        otherCoord = {
-            x: res.x,
-            y: res.y
-        }
-        success();
-    }, 'http://localhost:3000/2');
+function update(res) {
+    if(!res){
+        httpGet('/moto/coords', (res) => {
+            populate(JSON.parse(res));
+        });
+        return;
+    }
+    populate(res);
 }
 
+function populate(res){
+    res.forEach((moto, i) => {
+        motos[i].top = moto.coords.y + 'px';
+        motos[i].left = moto.coords.x + 'px';
+    });
+}
+
+function continuousUpdate(){
+    update();
+    setTimeout(() => {
+        continuousUpdate();
+    }, 5);
+}
+
+getArrow();

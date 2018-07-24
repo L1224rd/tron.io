@@ -45,7 +45,6 @@ function init() {
 
 function move(moto, direction, success) {
     const speed = 10;
-
     switch (+direction) {
         case 37: //left
             motos[moto].coords.x -= speed;

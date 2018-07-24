@@ -25,7 +25,7 @@ function getArrow() {
 function httpGet(url, success) {
     var http = new XMLHttpRequest();
 
-    http.open('GET', 'http://localhost:3000' + url, true);
+    http.open('GET', 'https://tron-io.herokuapp.com/' + url, true);
 
     http.onreadystatechange = () => {
         if (http.status === 0) {

@@ -6,7 +6,7 @@ httpGet('/moto/number', (res) => {
     number = res;
 });
 
-update();
+continuousUpdate();
 
 for (i = 0; i < 6; i++) {
     motos.push(document.getElementById('moto' + i).style);

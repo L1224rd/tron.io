@@ -15,9 +15,7 @@ for (i = 0; i < 6; i++) {
 function getArrow() {
     html.addEventListener('keydown', (e) => {
         if (e.keyCode >= 37 && e.keyCode <= 40) {
-            flag = 1;
             setTimeout(() => {
-                flag = 0;
                 move(e.keyCode);
             }, 50);
         }

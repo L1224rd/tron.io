@@ -1,6 +1,7 @@
-const html = document.getElementById('html');
 const motos = [];
 let number;
+let direction;
+let flag = 0;
 
 httpGet('/moto/number', (res) => {
     number = res;
@@ -11,9 +12,13 @@ for (i = 0; i < 6; i++) {
 }
 
 function getArrow() {
-    html.addEventListener('keydown', (e) => {
+    document.getElementById('html').addEventListener('keydown', (e) => {
         if (e.keyCode >= 37 && e.keyCode <= 40) {
-            move(e.keyCode);
+            direction = e.keyCode;
+            if(flag === 0){
+                flag = 1;
+                move();
+            }
         }
     });
 }
@@ -34,9 +39,12 @@ function httpGet(url, success) {
     http.send();
 }
 
-function move(direction) {
+function move() {
     httpGet('/moto/coords/' + number + '/' + direction, (res) => {
         update(JSON.parse(res));
+        setTimeout(() => {
+            move();
+        }, 10);
     });
 }
 

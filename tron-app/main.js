@@ -6,8 +6,6 @@ httpGet('/moto/number', (res) => {
     number = res;
 });
 
-continuousUpdate();
-
 for (i = 0; i < 6; i++) {
     motos.push(document.getElementById('moto' + i).style);
 }
@@ -15,9 +13,7 @@ for (i = 0; i < 6; i++) {
 function getArrow() {
     html.addEventListener('keydown', (e) => {
         if (e.keyCode >= 37 && e.keyCode <= 40) {
-            setTimeout(() => {
-                move(e.keyCode);
-            }, 50);
+            move(e.keyCode);
         }
     });
 }
@@ -25,7 +21,7 @@ function getArrow() {
 function httpGet(url, success) {
     var http = new XMLHttpRequest();
 
-    http.open('GET', 'https://tron-io.herokuapp.com/' + url, true);
+    http.open('GET', 'http://localhost:3000' + url, true);
 
     http.onreadystatechange = () => {
         if (http.status === 0) {
@@ -45,7 +41,7 @@ function move(direction) {
 }
 
 function update(res) {
-    if(!res){
+    if (!res) {
         httpGet('/moto/coords', (res) => {
             populate(JSON.parse(res));
         });
@@ -54,18 +50,13 @@ function update(res) {
     populate(res);
 }
 
-function populate(res){
+function populate(res) {
     res.forEach((moto, i) => {
         motos[i].top = moto.coords.y + 'px';
         motos[i].left = moto.coords.x + 'px';
     });
 }
 
-function continuousUpdate(){
-    update();
-    setTimeout(() => {
-        continuousUpdate();
-    }, 5);
-}
+setInterval(update, 50);
 
 getArrow();

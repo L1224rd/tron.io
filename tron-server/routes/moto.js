@@ -4,35 +4,35 @@ let motos, number;
 
 init();
 
-app.get('/number', (req, res) => {
-    res.send('' + number);
-    number++;
+app.get('/number', (req, res) => { // sets an id to each page that call it
+    res.send('' + number); // send the id as a string to avoid errors (0 and 1)
+    number++; // auto increment
 });
 
-app.get('/clear', (req, res) => {
+app.get('/clear', (req, res) => { // resets the motos array
     init();
     res.send('OK');
 });
 
-app.get('/coords', (req, res) => {
+app.get('/coords', (req, res) => { // sends the coordinates of all the motos
     res.send(motos);
 });
 
-app.get('/coords/:moto', (req, res) => {
+app.get('/coords/:moto', (req, res) => { // sends coordinate of the specified moto
     res.send(motos[req.params.moto]);
 });
 
-app.get('/coords/:moto/:direction', (req, res) => {
+app.get('/coords/:moto/:direction', (req, res) => { // receives a moto id and a direction
     move(req.params.moto, req.params.direction, () => {
-        res.send(motos);
+        res.send(motos); // sends the coordinates of all the motos
     });
 });
 
-function init() {
+function init() { // populates the motos array
     motos = [];
-    number = 0;
+    number = 0; // set the id to 0
 
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < 6; i++) { // push 6 moto's into motos with the coords (0,0)
         motos.push({
             name: '',
             coords: {
@@ -43,10 +43,10 @@ function init() {
     }
 }
 
-function move(moto, direction, success) {
-    const speed = 3;
+function move(moto, direction, success) { //moves the specified moto in the specified direction
+    const speed = 3; // amount that the moto will move each time move is called
 
-    switch (+direction) {
+    switch (+direction) { // (37 - 40) are the keyCodes of the arrow keys
         case 37: //left
             motos[moto].coords.x -= speed;
             break;
@@ -60,7 +60,7 @@ function move(moto, direction, success) {
             motos[moto].coords.y += speed;
             break;
     }
-    success();
+    success(); // callback
 }
 
 

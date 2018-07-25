@@ -1,13 +1,16 @@
+'use strict';
+
 const motos = [];
 let number;
 let direction;
 let flag = 0;
+let flagConnection = 0;
 
 httpGet('/moto/number', (res) => {
     number = res;
 });
 
-for (i = 0; i < 6; i++) {
+for (let i = 0; i < 6; i++) {
     motos.push(document.getElementById('moto' + i).style);
 }
 
@@ -15,7 +18,7 @@ function getArrow() {
     document.getElementById('html').addEventListener('keydown', (e) => {
         if (e.keyCode >= 37 && e.keyCode <= 40) {
             direction = e.keyCode;
-            if(flag === 0){
+            if (flag === 0) {
                 flag = 1;
                 move();
             }
@@ -30,6 +33,7 @@ function httpGet(url, success) {
 
     http.onreadystatechange = () => {
         if (http.status === 0) {
+            flagConnection = 1;
             console.log('Can\'t connect to the server...');
         } else if (http.readyState === 4 && http.status === 200) {
             success(http.response);
@@ -49,13 +53,15 @@ function move() {
 }
 
 function update(res) {
-    if (!res) {
-        httpGet('/moto/coords', (res) => {
-            populate(JSON.parse(res));
-        });
-        return;
+    if (flagConnection === 0) {
+        if (!res) {
+            httpGet('/moto/coords', (res) => {
+                populate(JSON.parse(res));
+            });
+            return;
+        }
+        populate(res);
     }
-    populate(res);
 }
 
 function populate(res) {

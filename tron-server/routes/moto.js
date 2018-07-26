@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 let motos, number;
+let speed = 10; // amount that the moto will move each time move is called
 
 init();
 
 app.get('/number', (req, res) => { // sets an id to each page that call it
+    if(number === 6) init();
     res.send('' + number); // send the id as a string to avoid errors (0 and 1)
     number++; // auto increment
 });
@@ -12,6 +14,11 @@ app.get('/number', (req, res) => { // sets an id to each page that call it
 app.get('/clear', (req, res) => { // resets the motos array
     init();
     res.send('OK');
+});
+
+app.get('/speed/:speed', (req, res) => { // resets the motos array
+    speed = +req.params.speed;
+    res.send(`Speed set to ${speed}`);
 });
 
 app.get('/coords', (req, res) => { // sends the coordinates of all the motos
@@ -44,8 +51,6 @@ function init() { // populates the motos array
 }
 
 function move(moto, direction, success) { //moves the specified moto in the specified direction
-    const speed = 3; // amount that the moto will move each time move is called
-
     if(motos[moto].coords.y < -moto*20) motos[moto].coords.y = 480-moto*20;
     if(motos[moto].coords.y > 480-moto*20) motos[moto].coords.y = -moto*20;
     if(motos[moto].coords.x < 0) motos[moto].coords.x = 980;

@@ -6,6 +6,9 @@ let direction;
 let flag = 0;
 let flagConnection = 0;
 
+setInterval(update, 50);
+getArrow();
+
 httpGet('/moto/number', (res) => {
     number = res;
 });
@@ -49,7 +52,7 @@ function move() {
         update(JSON.parse(res));
         setTimeout(() => {
             move();
-        }, 10);
+        }, 50);
     });
 }
 
@@ -71,7 +74,3 @@ function populate(res) {
         motos[i].left = moto.coords.x + 'px';
     });
 }
-
-setInterval(update, 50);
-
-getArrow();

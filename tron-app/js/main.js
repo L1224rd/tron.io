@@ -29,7 +29,7 @@ function getArrow() {
 function httpGet(url, success) {
     var http = new XMLHttpRequest();
 
-    http.open('GET', 'http://localhost:3000' + url, true);
+    http.open('GET', 'https://tronio-server.herokuapp.com' + url, true);
 
     http.onreadystatechange = () => {
         if (http.status === 0) {

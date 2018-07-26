@@ -1,2 +1,3 @@
-/tron-server/node_modules/
+tron-server/node_modules/
+tron-app/node_modules/
 .env

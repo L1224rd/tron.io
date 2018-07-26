@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const motos = [];
 let number;
@@ -30,6 +30,7 @@ function httpGet(url, success) {
     var http = new XMLHttpRequest();
 
     http.open('GET', 'https://tronio-server.herokuapp.com' + url, true);
+    // http.open('GET', 'http://localhost:3000' + url, true);
 
     http.onreadystatechange = () => {
         if (http.status === 0) {

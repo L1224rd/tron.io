@@ -46,6 +46,11 @@ function init() { // populates the motos array
 function move(moto, direction, success) { //moves the specified moto in the specified direction
     const speed = 3; // amount that the moto will move each time move is called
 
+    if(motos[moto].coords.y < -moto*20) motos[moto].coords.y = 480-moto*20;
+    if(motos[moto].coords.y > 480-moto*20) motos[moto].coords.y = -moto*20;
+    if(motos[moto].coords.x < 0) motos[moto].coords.x = 980;
+    if(motos[moto].coords.x > 980) motos[moto].coords.x = 0;
+
     switch (+direction) { // (37 - 40) are the keyCodes of the arrow keys
         case 37: //left
             motos[moto].coords.x -= speed;

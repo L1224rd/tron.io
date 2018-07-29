@@ -1,3 +1,5 @@
+const moto = require('./moto');
+
 module.exports = {
-    moto: require('./moto'),
-}
+  moto,
+};

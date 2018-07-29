@@ -1,26 +1,25 @@
-"use strict";
-
 const express = require('express');
+
 const app = express();
 
 app.set('port', process.env.PORT || 8000);
 
-//================== MIDLEWARE STATIC ==================//
+// ========================== MIDLEWARE STATIC ========================== //
 
-app.use(express.static(__dirname + '/views'));
-app.use(express.static(__dirname + '/js'));
-app.use(express.static(__dirname + '/css'));
+app.use(express.static(`${__dirname}/views`));
+app.use(express.static(`${__dirname}/js`));
+app.use(express.static(`${__dirname}/css`));
 
-//================== ROUTES ==================//
+// ========================== ROUTES ========================== //
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html');
+  res.sendFile('index.html');
 });
 
-//================== RUN APP ==================//
+// ========================== RUN APP ========================== //
 
 app.listen(app.get('port'), () => {
-    console.log('READY');
+  console.log('READY');
 });
 
-//==============================================//
+// ============================================================ //

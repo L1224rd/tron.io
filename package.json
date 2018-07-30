@@ -1,0 +1,27 @@
+{
+  "name": "tronio",
+  "version": "1.0.0",
+  "description": "Game inspired in TRON, testing real time trackig using nodejs/express.",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "husky": "^1.0.0-rc.13"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepush": "./node_modules/.bin/eslint tron-app/js/*.js --fix; ./node_modules/.bin/eslint tron-server/routes/*.js --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L1224rd/tron.io.git"
+  },
+  "author": "Eder Marques <eder.marques@citi.org.br>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/L1224rd/tron.io/issues"
+  },
+  "homepage": "https://github.com/L1224rd/tron.io#readme"
+}

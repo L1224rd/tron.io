@@ -2,9 +2,13 @@ const express = require('express');
 
 const app = express();
 
-let motos;
-let number;
+let    motos    ;
+let number;    
 let speed = 10; // amount that the moto will move each time move is called
+
+
+
+
 
 function init() { // populates the motos array
   motos = [];
